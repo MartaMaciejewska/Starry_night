@@ -1,0 +1,90 @@
+$sky_color: #02021C;
+$star_color: #DEDEDE;
+$moon_color: #555555;
+
+@mixin blur {
+  -webkit-box-shadow: 0 0 115px -1px rgba(85,85,85,0.8);
+  -moz-box-shadow: 0 0 115px -1px rgba(85,85,85,0.8);
+  box-shadow: 0 0 115px -1px rgba(85,85,85,0.8);
+}
+
+body {
+  background-color: $sky_color;
+  position: relative;
+};
+
+@keyframes twinkle {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+};
+
+@keyframes moon_movement {
+  0% {
+    top: 80vh;
+    left: 0;
+  }
+  50% {
+    top: 70vh;
+    left: 60vw;
+  }
+  100% {
+    top: 65vh;
+    left: 110vw;
+  }
+}
+#moon {
+  @include blur;
+  height: 120px;
+  width: 120px;
+  background-color: $moon_color;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 2;
+  .crater{
+    position:absolute;
+    height: 27px;
+    width:27px;
+    border-radius: 50%;
+    background:radial-gradient($moon_color, #2A292A);
+    &:first-of-type{
+      top: 15px;
+      left:15px;
+    }
+    &:last-of-type {
+      top: 30px;
+      left: 76px;
+    }
+    &:nth-of-type(2){
+      top: 74px;
+      left:78px;
+    }
+    &:nth-of-type(3){
+      top: 67px;
+      left:30px;
+    }
+  }
+  animation: 180s infinite moon_movement;
+};
+.star {
+  background: radial-gradient($star_color, transparent);
+  border-radius: 50%;
+  position: absolute;
+  @for $i from 1 through 40 {
+    &:nth-child(#{$i}) {
+      top: random(100)+vh;
+      left: random(100)+vw;
+      $size: random(10)+px;
+      height: $size;
+      width: $size;
+      animation: random(3)+s infinite twinkle;
+
+    }
+  }
+};
